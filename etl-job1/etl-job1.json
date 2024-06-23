@@ -1,0 +1,41 @@
+{
+  "name" : "etl-job1",
+  "jobMode" : "VISUAL",
+  "description" : "etl-job1",
+  "role" : "arn:aws:iam::151461029816:role/dev-glue",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-151461029816-us-east-1/scripts/etl-job1.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-151461029816-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "false",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-151461029816-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 2,
+  "timeout" : 2880,
+  "maxCapacity" : 2.0,
+  "glueVersion" : "4.0",
+  "numberOfWorkers" : 2,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1719075356517\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://bucketfortesters/info.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"Amazon S3\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"id\",\"Type\":\"string\"},{\"Name\":\"name\",\"Type\":\"string\"},{\"Name\":\"age\",\"Type\":\"string\"},{\"Name\":\"salary\",\"Type\":\"string\"},{\"Name\":\"city\",\"Type\":\"string\"},{\"Name\":\"details\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://bucketfortesters/info.csv\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1719076139840\":{\"S3DirectTarget\":{\"AutoDataQuality\":{\"IsEnabled\":false},\"Compression\":\"none\",\"Format\":\"csv\",\"Inputs\":[\"node-1719075429043\"],\"Name\":\"Amazon S3 Target\",\"PartitionKeys\":[],\"Path\":\"s3://bucketfortesters/output/june22_2/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}},\"node-1719075429043\":{\"Aggregate\":{\"Aggs\":[{\"AggFunc\":\"count\",\"Column\":[\"city\"]}],\"Groups\":[[\"city\"]],\"Inputs\":[\"node-1719075356517\"],\"Name\":\"Aggregate\"}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "AWS",
+    "branch" : "main",
+    "folder" : "etl-job1"
+  }
+}
